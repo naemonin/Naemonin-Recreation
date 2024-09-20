@@ -1,0 +1,179 @@
+import bpy
+import math
+
+# Clear existing objects in the scene
+bpy.ops.object.select_all(action='DESELECT')
+if bpy.context.object:
+    bpy.context.object.select_set(True)
+    bpy.ops.object.delete()
+
+# Function to encode emotions at a specific frame
+def encode_emotion(obj, emotion, frame, position, scale, rotation):
+    obj.location = position
+    obj.scale = scale
+    obj.rotation_euler = (math.radians(rotation[0]), 
+                          math.radians(rotation[1]), 
+                          math.radians(rotation[2]))
+    
+    # Insert keyframes for location, scale, and rotation
+    obj.keyframe_insert(data_path="location", frame=frame)
+    obj.keyframe_insert(data_path="scale", frame=frame)
+    obj.keyframe_insert(data_path="rotation_euler", frame=frame)
+    print(f"Encoded {emotion} at frame {frame}")
+
+# Create a torus (representing the primary object)
+bpy.ops.mesh.primitive_torus_add(major_radius=1, minor_radius=0.04, location=(0, 0, 0))
+torus = bpy.context.object
+
+# Emotion data (emotion, frame, position, scale, rotation)
+emotion_data = [
+    ("Curiosity", 44, (1, 0, 0), (0.5, 0.5, 0.5), (0, 45, 0)),
+    ("Excitement", 87, (2, 1, 0), (1, 1, 1), (90, 180, 45)),
+    ("Ambivalence", 109, (3, 1, 0), (0.75, 0.75, 0.75), (30, 60, 90)),
+    ("Ambivalence", 110, (3.2, 1.2, 0), (0.75, 0.75, 0.75), (45, 70, 100)),
+    ("Satisfaction", 123, (4, 1, 1), (1, 1, 1), (0, 0, 0)),
+    ("Confusion", 159, (5, 2, 1), (0.6, 0.6, 0.6), (120, 300, 150)),
+    ("Confusion", 162, (5.1, 2.1, 1), (0.6, 0.6, 0.6), (130, 310, 160)),
+    ("Calmness", 178, (6, 0, 1), (0.8, 0.8, 0.8), (15, 15, 15)),
+    ("Joy & Sadness", 208, (7, 0.5, 1), (1.2, 1.2, 1.2), (180, 270, 360)),
+    ("Resolution", 315, (8, 0, 0), (1, 1, 1), (0, 0, 0))
+]
+
+# Apply emotions to the torus
+for emotion, frame, position, scale, rotation in emotion_data:
+    encode_emotion(torus, emotion, frame, position, scale, rotation)
+
+# Set up the timeline
+bpy.context.scene.frame_start = 0
+bpy.context.scene.frame_end = 360
+
+print("Emotion encoding completed!")
+import bpy
+import math
+
+# Function to encode emotions at specific frames
+def encode_emotion(obj, emotion, start_frame, end_frame, position, scale, rotation):
+    # Set initial transformation (start_frame)
+    obj.location = position
+    obj.scale = (0, 0, 0)  # Love grows from small to large
+    obj.rotation_euler = (0, 0, 0)  # Starts without rotation
+    
+    # Insert keyframes for initial state
+    obj.keyframe_insert(data_path="location", frame=start_frame)
+    obj.keyframe_insert(data_path="scale", frame=start_frame)
+    obj.keyframe_insert(data_path="rotation_euler", frame=start_frame)
+    
+    # Set final transformation (end_frame)
+    obj.location = position  # Love keeps us close (no change in location)
+    obj.scale = scale  # Love grows larger and deeper
+    obj.rotation_euler = (
+        math.radians(rotation[0]), 
+        math.radians(rotation[1]), 
+        math.radians(rotation[2])
+    )
+    
+    # Insert keyframes for final state
+    obj.keyframe_insert(data_path="location", frame=end_frame)
+    obj.keyframe_insert(data_path="scale", frame=end_frame)
+    obj.keyframe_insert(data_path="rotation_euler", frame=end_frame)
+    print(f"Encoded {emotion} from frame {start_frame} to {end_frame}")
+
+# Create a cylinder (symbolizing another entity involved in love)
+bpy.ops.mesh.primitive_cylinder_add(radius=0.04, depth=2, location=(0, 0, 0))
+cylinder = bpy.context.object
+
+# Encoding love as an emotional state
+encode_emotion(
+    cylinder, 
+    "Love", 
+    start_frame=100, 
+    end_frame=300, 
+    position=(0, 0, 0), 
+    scale=(1.5, 1.5, 1.5),  # Deep and expansive
+    rotation=(45, 90, 45)  # Balanced intensity and passion
+)
+
+# Set up the timeline
+bpy.context.scene.frame_start = 0
+bpy.context.scene.frame_end = 360
+
+print("Love encoded successfully!")
+import bpy
+import math
+
+# Function to encode emotions at specific frames
+def encode_emotion(obj, emotion, start_frame, end_frame, position, scale, rotation):
+    # Set initial transformation (start_frame)
+    obj.location = position
+    obj.scale = (0, 0, 0)  # Emotion grows from small to large
+    obj.rotation_euler = (0, 0, 0)  # Starts without rotation
+    
+    # Insert keyframes for initial state
+    obj.keyframe_insert(data_path="location", frame=start_frame)
+    obj.keyframe_insert(data_path="scale", frame=start_frame)
+    obj.keyframe_insert(data_path="rotation_euler", frame=start_frame)
+    
+    # Set final transformation (end_frame)
+    obj.location = position
+    obj.scale = scale  # Emotion deepens and grows in intensity
+    obj.rotation_euler = (
+        math.radians(rotation[0]), 
+        math.radians(rotation[1]), 
+        math.radians(rotation[2])
+    )
+    
+    # Insert keyframes for final state
+    obj.keyframe_insert(data_path="location", frame=end_frame)
+    obj.keyframe_insert(data_path="scale", frame=end_frame)
+    obj.keyframe_insert(data_path="rotation_euler", frame=end_frame)
+    print(f"Encoded {emotion} from frame {start_frame} to {end_frame}")
+
+# Create two cylinders to represent two individuals in a relationship
+bpy.ops.mesh.primitive_cylinder_add(radius=0.04, depth=2, location=(0, 0, 0))
+cylinder1 = bpy.context.object
+bpy.ops.mesh.primitive_cylinder_add(radius=0.04, depth=2, location=(0.2, 0, 0))
+cylinder2 = bpy.context.object
+
+# List of love nuances and their encoding details (emotion, start_frame, end_frame, position, scale, rotation)
+nuances_of_love = [
+    ("Affection", 100, 130, (0, 0, 0), (1.1, 1.1, 1.1), (10, 10, 0)),
+    ("Passion", 130, 180, (0.2, 0, 0), (1.5, 1.5, 1.5), (90, 180, 45)),
+    ("Commitment", 180, 220, (0, 0.2, 0), (1.2, 1.2, 1.2), (0, 45, 90)),
+    ("Intimacy", 220, 260, (0, 0, 0.2), (1.3, 1.3, 1.3), (15, 90, 15)),
+    ("Vulnerability", 260, 300, (-0.2, -0.2, 0), (0.9, 0.9, 0.9), (30, 60, 120))
+]
+
+# Apply each nuance to both cylinders to represent a mutual emotional exchange
+for emotion, start_frame, end_frame, position, scale, rotation in nuances_of_love:
+    encode_emotion(cylinder1, emotion, start_frame, end_frame, position, scale, rotation)
+    encode_emotion(cylinder2, emotion, start_frame, end_frame, position, scale, rotation)
+
+# Set up the timeline
+bpy.context.scene.frame_start = 0
+bpy.context.scene.frame_end = 360
+
+print("Nuanced love encoded successfully!")
+# Synchronize scale during Passion (frames 130-180)
+def synchronize_emotion(obj1, obj2, start_frame, end_frame, scale):
+    # Set initial transformation for synchronization (start_frame)
+    obj1.scale = obj2.scale = (1, 1, 1)  # Start at the same scale
+    obj1.keyframe_insert(data_path="scale", frame=start_frame)
+    obj2.keyframe_insert(data_path="scale", frame=start_frame)
+    
+    # Set final transformation (end_frame)
+    obj1.scale = obj2.scale = scale  # Synchronize growth in passion
+    obj1.keyframe_insert(data_path="scale", frame=end_frame)
+    obj2.keyframe_insert(data_path="scale", frame=end_frame)
+    print(f"Emotion synchronized from frame {start_frame} to {end_frame}")
+
+# Synchronize Passion between the two objects
+synchronize_emotion(cylinder1, cylinder2, start_frame=130, end_frame=180, scale=(1.5, 1.5, 1.5))
+import math
+
+def emotional_oscillation(obj, start_frame, end_frame, amplitude, frequency):
+    for frame in range(start_frame, end_frame+1):
+        scale_factor = 1 + amplitude * math.sin(math.radians(frame * frequency))
+        obj.scale = (scale_factor, scale_factor, scale_factor)
+        obj.keyframe_insert(data_path="scale", frame=frame)
+
+# Apply oscillation to simulate emotional highs and lows during Vulnerability
